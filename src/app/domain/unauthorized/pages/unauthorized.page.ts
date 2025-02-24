@@ -1,13 +1,15 @@
+
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import {Location} from '@angular/common';
 
 @Component({
-    selector: 'not-found-page',
-    templateUrl: './not-found.page.html',
-    styleUrls: ['./not-found.page.scss']
+    selector: 'unauthorized-page',
+    templateUrl: './unauthorized.page.html',
+    styleUrls: ['./unauthorized.page.scss']
 })
-export class NotFoundPage {
+export class UnAuthorizedPage {
+
     constructor(private location: Location, private router: Router) {}
 
     goBack() {
@@ -17,5 +19,4 @@ export class NotFoundPage {
         this.router.navigate(['/']);
       }
     }
-      
 }

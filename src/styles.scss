@@ -25,3 +25,24 @@ html, body, figure {
 * {
     box-sizing: border-box;
 }
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: var(--color-neutral-1);
+}
+
+.card {
+    background-color: white;
+    padding: var(--spacing-l);
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

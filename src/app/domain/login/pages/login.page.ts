@@ -1,5 +1,7 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { Role } from '../../../core/role/role.model';
+import { RoleService } from '../../../core/role/role.service';
 
 @Component({
     selector: 'login-page',
@@ -7,9 +9,14 @@ import { Router } from '@angular/router';
     styleUrls: ['./login.page.scss']
 })
 export class LoginPage {
-    private router: Router = inject(Router);
 
-    login() {
+    constructor(
+        private roleService: RoleService,
+        private router: Router
+    ) {}
+
+    login(role: Role) {
+        this.roleService.setRole(role);
         this.router.navigate(['/portal/instructions']);
     }
 }
