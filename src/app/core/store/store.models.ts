@@ -4,12 +4,5 @@ import { Product } from "../product/product.model";
 export interface SessionState {
     products?: Product[];
     companies?: Company[];
-    user?: any;
+    adminConfig?: any;
 }
-
-
-
-// todo
-// export interface User {
-
-// }

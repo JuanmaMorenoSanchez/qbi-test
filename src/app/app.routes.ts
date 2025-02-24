@@ -2,6 +2,7 @@ import { Routes } from '@angular/router';
 import { InstructionsPage } from './domain/instructions/pages/instructions.page';
 import { LoginPage } from './domain/login/pages/login.page';
 import { PortalPage } from './domain/portal/pages/portal.page';
+import { NotFoundPage } from './domain/not-found/pages/not-found.page';
 
 export const routes: Routes = [
     {
@@ -10,5 +11,6 @@ export const routes: Routes = [
         ]
     },
     { path: 'login', component: LoginPage },
-    { path: '', redirectTo: '/login', pathMatch: 'full' }
+    { path: '', redirectTo: '/login', pathMatch: 'full' },
+    { path: '**', component: NotFoundPage }
 ];

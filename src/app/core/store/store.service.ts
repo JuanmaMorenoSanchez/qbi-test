@@ -7,8 +7,6 @@ import { SessionState } from './store.models';
 })
 export class StoreService {
 
-  // Persnally, I would rather use akita or a state management lib
-
   private state: SessionState = {};
   private stateSubject = new BehaviorSubject<SessionState>({});
 
@@ -45,5 +43,21 @@ export class StoreService {
     delete this.state[key];
     this.saveState();
     this.stateSubject.next(this.state);
+  }
+
+  updateItem(key: 'products' | 'companies', updatedItem: any) {
+    const items = this.get(key);
+    if (!Array.isArray(items)) return;
+  
+    const updatedItems = items.map(item => (item.id === updatedItem.id ? updatedItem : item));
+    this.set(key, updatedItems);
+  }
+  
+  removeItem(key: 'products' | 'companies', id: string) {
+    const items = this.get(key);
+    if (!Array.isArray(items)) return;
+  
+    const filteredItems = items.filter(item => item.id !== id);
+    this.set(key, filteredItems);
   }
 }
