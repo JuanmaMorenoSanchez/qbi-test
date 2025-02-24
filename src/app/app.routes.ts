@@ -7,11 +7,23 @@ import { RoleGuard } from './shared/guards/role.guard';
 import { RoleEnum } from './core/role/role.model';
 import { AdminPage } from './domain/admin/pages/admin.page';
 import { UnAuthorizedPage } from './domain/unauthorized/pages/unauthorized.page';
+import { DashboardPage } from './domain/dashboard/pages/dashboard.page';
 
 export const routes: Routes = [
     {
         path: 'portal', component: PortalPage, children: [
-            { path: 'instructions', component: InstructionsPage },
+            { 
+                path: 'instructions', 
+                component: InstructionsPage,
+                canActivate: [RoleGuard],
+                data: { expectedRoles: [RoleEnum.ADMIN, RoleEnum.USER, RoleEnum.GUEST] }
+            },
+            {
+                path: 'dashboard',
+                component: DashboardPage,
+                canActivate: [RoleGuard],
+                data: { expectedRoles: [RoleEnum.ADMIN, RoleEnum.USER] }
+            },
             {
                 path: 'admin',
                 component: AdminPage,
