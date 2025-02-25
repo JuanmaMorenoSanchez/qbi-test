@@ -7,6 +7,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Product } from '../../../core/product/product.model';
 import { Company } from '../../../core/company/company.model';
+import { AppCounterComponent } from '../components/app-counter/app-counter.component';
+import { DoughnutChartComponent } from '../components/doughnutchart/doughnutchartcomponent';
 
 @Component({
     selector: 'dashboard-page',
@@ -14,7 +16,9 @@ import { Company } from '../../../core/company/company.model';
     styleUrls: ['./dashboard.page.scss'],
     imports: [
         CommonModule, 
-        FormsModule
+        FormsModule,
+        AppCounterComponent,
+        DoughnutChartComponent
     ]
 })
 export class DashboardPage {
@@ -33,6 +37,14 @@ export class DashboardPage {
           ? this.productData()
           : this.companyData()
     );
+    public countValue = computed(() => this.displayingData().length)
+    public chartData = computed(() => {
+        if (this.selectedType() === 'product') {
+          return this.groupProductPrices();
+        } else {
+          return this.groupCompaniesBySuffix();
+        }
+    });
 
     constructor() {
         this.loadData();
@@ -53,5 +65,41 @@ export class DashboardPage {
           this.selectedType.set(selectElement.value as 'product' | 'company');
         }
     }
+
+    
+
+
+
+      
+        private groupProductPrices(): Record<string, number> {
+          const grouped = { '0€ - 150€': 0, '150€ - 300€': 0, '300€ - 500€': 0, '+500€': 0 };
+      
+          this.productData().forEach(product => {
+            const price = Number(product.price)
+            if (price < 150) grouped['0€ - 150€']++;
+            else if (price < 300) grouped['150€ - 300€']++;
+            else if (price < 500) grouped['300€ - 500€']++;
+            else grouped['+500€']++;
+          });
+      
+          return grouped;
+        }
+      
+        private groupCompaniesBySuffix(): Record<string, number> {
+          const grouped: Record<string, number> = {};
+      
+          this.companyData().forEach(company => {
+            if (!grouped[company.suffix]) {
+              grouped[company.suffix] = 0;
+            }
+            grouped[company.suffix]++;
+          });
+      
+          return grouped;
+        }
+      
+
+
+    
 
 }

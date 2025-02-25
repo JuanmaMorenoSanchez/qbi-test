@@ -1,0 +1,19 @@
+select {
+    padding: var(--padding);
+    font-size: var(--font-size);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    background-color: var(--background-color);
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.widgets {
+    display: flex;
+    gap: 1em;
+    flex-wrap: wrap;
+    justify-content: center;
+    height: auto;
+}
+  

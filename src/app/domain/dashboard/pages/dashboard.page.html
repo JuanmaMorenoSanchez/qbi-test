@@ -7,12 +7,17 @@
       </select>
     </header>
   
-    {{ displayingData() | json}}
-    <!-- <section class="widgets">
-      <app-counter [count]="countValue"></app-counter>
-      <app-doughnut-chart *ngIf="isAdmin" [data]="chartData"></app-doughnut-chart>
+    <section class="widgets">
+    <div class="card">
+      <app-counter [count]="countValue()"></app-counter>
+    </div>
+    @if (isAdmin()) {
+      <div class="card">
+        <app-doughnut-chart [data]="chartData()"></app-doughnut-chart>
+      </div>
+    }
     </section>
   
-    <app-data-table [data]="filteredData"></app-data-table> -->
+    <!-- <app-data-table [data]="filteredData"></app-data-table>  -->
 </div>
   
