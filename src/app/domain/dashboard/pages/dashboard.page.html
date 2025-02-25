@@ -1,1 +1,18 @@
-DASHBOARD PAGE!ª
+<div class="dashboard">
+    <header>
+      <h1>Dashboard</h1>
+      <select (change)="onDataSelectionChange($event)">
+        <option value="product">Productos</option>
+        <option value="company">Compañías</option>
+      </select>
+    </header>
+  
+    {{ displayingData() | json}}
+    <!-- <section class="widgets">
+      <app-counter [count]="countValue"></app-counter>
+      <app-doughnut-chart *ngIf="isAdmin" [data]="chartData"></app-doughnut-chart>
+    </section>
+  
+    <app-data-table [data]="filteredData"></app-data-table> -->
+</div>
+  

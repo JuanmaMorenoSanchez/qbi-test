@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { StoreService } from '../store/store.service';
-import { Observable, tap } from 'rxjs';
+import { Observable, of, tap } from 'rxjs';
 import { Product } from './product.model';
 import { environment } from '../../../environments/environment';
 
@@ -9,15 +9,20 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ProductService {
+  private http = inject(HttpClient);
+  private store = inject(StoreService);
 
   private readonly urlExtension = "product";
 
-  constructor(private http: HttpClient, private store: StoreService) {}
-
   fetchAllProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(environment.dataApiUrl+this.urlExtension).pipe(
-      tap(products => this.store.set('products', products))
-    );
+    const cachedProducts = this.store.get('products');
+    if (cachedProducts) {
+      return of(cachedProducts);
+    } else {
+      return this.http.get<Product[]>(environment.dataApiUrl+this.urlExtension).pipe(
+        tap(products => this.store.set('products', products))
+      );
+    }
   }
 
   updateProduct(updatedProduct: Product) {
