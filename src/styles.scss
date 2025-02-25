@@ -41,11 +41,15 @@ html, body, figure {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 50%;
     min-width: 33%;
-    width: 100%;
-    // min-height: 600px;
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     flex: 1;
+}
+
+.card-full-width {
+    @extend .card;
+    max-width: 100%;
+    min-width: 100%;
 }

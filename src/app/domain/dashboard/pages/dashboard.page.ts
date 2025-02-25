@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { ProductService } from '../../../core/product/product.service';
 import { CompanyService } from '../../../core/company/company.service';
 import { RoleService } from '../../../core/role/role.service';
@@ -9,6 +9,9 @@ import { Product } from '../../../core/product/product.model';
 import { Company } from '../../../core/company/company.model';
 import { AppCounterComponent } from '../components/app-counter/app-counter.component';
 import { DoughnutChartComponent } from '../components/doughnutchart/doughnutchartcomponent';
+import { AppTableComponent } from '../components/app-table/app-table.component';
+import { StoreService } from '../../../core/store/store.service';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 @Component({
     selector: 'dashboard-page',
@@ -18,13 +21,15 @@ import { DoughnutChartComponent } from '../components/doughnutchart/doughnutchar
         CommonModule, 
         FormsModule,
         AppCounterComponent,
-        DoughnutChartComponent
+        DoughnutChartComponent,
+        AppTableComponent
     ]
 })
 export class DashboardPage {
 
     private productService = inject(ProductService);
     private companyService = inject(CompanyService);
+    private storeService = inject(StoreService)
     private roleService = inject(RoleService);
   
     public selectedType = signal<'product' | 'company'>('product'); // type better
@@ -48,6 +53,7 @@ export class DashboardPage {
 
     constructor() {
         this.loadData();
+        this.observeDataChanges();
     }
     
     private loadData() {
@@ -59,6 +65,15 @@ export class DashboardPage {
         });
     }
 
+    private observeDataChanges() {
+        this.storeService.stateObservable
+            .pipe(takeUntilDestroyed())
+            .subscribe(state => {
+            this.productData.set(state.products!);
+            this.companyData.set(state.companies!);
+        })
+    }
+
     onDataSelectionChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement | null;
         if (selectElement) {
@@ -66,40 +81,30 @@ export class DashboardPage {
         }
     }
 
+    private groupProductPrices(): Record<string, number> {
+        const grouped = { '0€ - 150€': 0, '150€ - 300€': 0, '300€ - 500€': 0, '+500€': 0 };
     
-
-
-
-      
-        private groupProductPrices(): Record<string, number> {
-          const grouped = { '0€ - 150€': 0, '150€ - 300€': 0, '300€ - 500€': 0, '+500€': 0 };
-      
-          this.productData().forEach(product => {
-            const price = Number(product.price)
-            if (price < 150) grouped['0€ - 150€']++;
-            else if (price < 300) grouped['150€ - 300€']++;
-            else if (price < 500) grouped['300€ - 500€']++;
-            else grouped['+500€']++;
-          });
-      
-          return grouped;
-        }
-      
-        private groupCompaniesBySuffix(): Record<string, number> {
-          const grouped: Record<string, number> = {};
-      
-          this.companyData().forEach(company => {
-            if (!grouped[company.suffix]) {
-              grouped[company.suffix] = 0;
-            }
-            grouped[company.suffix]++;
-          });
-      
-          return grouped;
-        }
-      
-
-
+        this.productData().forEach(product => {
+        const price = Number(product.price)
+        if (price < 150) grouped['0€ - 150€']++;
+        else if (price < 300) grouped['150€ - 300€']++;
+        else if (price < 500) grouped['300€ - 500€']++;
+        else grouped['+500€']++;
+        });
     
-
+        return grouped;
+    }
+    
+    private groupCompaniesBySuffix(): Record<string, number> {
+        const grouped: Record<string, number> = {};
+    
+        this.companyData().forEach(company => {
+        if (!grouped[company.suffix]) {
+            grouped[company.suffix] = 0;
+        }
+        grouped[company.suffix]++;
+        });
+    
+        return grouped;
+    }
 }

@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { signal } from '@angular/core';
 
 @Component({
@@ -7,12 +7,18 @@ import { signal } from '@angular/core';
   styleUrls: ['./app-counter.component.css']
 })
 export class AppCounterComponent implements OnInit {
-  @Input() count: number = 0; // This will be the value passed from the parent component
-  currentCount = signal(0);   // Internal signal to store the current count value
-  duration = 2; // Animation duration in seconds
+  @Input() count: number = 0;
+  currentCount = signal(0);
+  duration = 2;
 
   ngOnInit() {
     this.animateCount();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['count']) {
+      this.animateCount();
+    }
   }
 
   private animateCount() {

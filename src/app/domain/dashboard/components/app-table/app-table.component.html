@@ -1,0 +1,43 @@
+@if (data.length) {
+    <table>
+        <thead>
+          <tr>
+            @for (column of columns(); track column) {
+                <th>{{ column }}</th>
+            }
+          </tr>
+        </thead>
+        <tbody>
+            @for (row of paginatedData(); track row) {
+                <tr>
+                    @for (column of columns(); track column) {
+                        <td>{{ row[ column ] }}</td>
+                    }
+                    <td *appRoleOnly="allRoles.ADMIN">
+                          <!-- <button (click)="onEdit(row)">Edit</button> -->
+                          <button (click)="onDelete(row)">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+      </table>
+    
+      <div class="pagination-controls">
+        <select (change)="onPageSizeChange($event)">
+          <option value="10">10 items per page</option>
+          <option value="20">20 items per page</option>
+          <option value="50">50 items per page</option>
+        </select>
+    
+        @for (page of totalPages | rangePipe: 1; track page) {
+            <button
+                (click)="goToPage(page - 1)"
+                [class.active]="pageIndex() === page - 1"
+            >
+                {{ page }}
+            </button>
+        }
+      </div>
+} @else {
+    <p>No data available.</p>
+}

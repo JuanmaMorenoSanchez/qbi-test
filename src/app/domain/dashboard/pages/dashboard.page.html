@@ -17,7 +17,8 @@
       </div>
     }
     </section>
-  
-    <!-- <app-data-table [data]="filteredData"></app-data-table>  -->
+    <div class="card-full-width">
+      <app-table [data]="displayingData()" [dataType]="selectedType()"></app-table>
+    </div>
 </div>
   

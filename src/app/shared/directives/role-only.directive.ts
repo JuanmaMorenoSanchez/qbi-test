@@ -20,7 +20,4 @@ export class RoleOnlyDirective {
       this.viewContainer.clear();
     }
   }
-
-
-  // use:    *appRoleOnly="allRoles.ADMIN"  - y asi solo se muestra si es admin. Recuerda importar
 }
