@@ -4,12 +4,20 @@
     </figure>
     <nav>
         <div class="top-container">
-            <a routerLink="/portal/instructions">Instructions</a>
-            <a routerLink="/portal/dashboard">Dashboard</a>
-            <a *appRoleOnly="allRoles.ADMIN" routerLink="/portal/admin">Admin</a>
-        </div>
+            <a 
+                routerLink="/portal/instructions">Instructions</a>
+            <a 
+                [class.disabled]="isGuest"
+                (click)="isGuest ? $event.preventDefault() : null" 
+                routerLink="/portal/dashboard">Dashboard</a>
 
-        
+            @if (!isGuest) {
+                <a 
+                    [class.disabled]="(isUser || isGuest)"
+                    (click)="(isUser || isGuest) ? $event.preventDefault() : null" 
+                    routerLink="/portal/admin">Admin</a>
+            }
+        </div>
         <div class="bottom-container">
             <a routerLink="/login">Logout</a>
         </div>
