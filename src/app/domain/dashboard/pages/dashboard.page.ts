@@ -12,6 +12,8 @@ import { DoughnutChartComponent } from '../components/doughnutchart/doughnutchar
 import { AppTableComponent } from '../components/app-table/app-table.component';
 import { StoreService } from '../../../core/store/store.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { SettingsService } from '../../../core/settings/settings.service';
+import { formatCurrency } from '../../../shared/utils/currency.utils';
 
 @Component({
     selector: 'dashboard-page',
@@ -26,11 +28,12 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
     ]
 })
 export class DashboardPage {
-
     private productService = inject(ProductService);
     private companyService = inject(CompanyService);
     private storeService = inject(StoreService)
     private roleService = inject(RoleService);
+    private settingsService = inject(SettingsService);
+
   
     public selectedType = signal<'product' | 'company'>('product'); // type better
     private productData = signal<Product[]>([]);
@@ -82,18 +85,30 @@ export class DashboardPage {
     }
 
     private groupProductPrices(): Record<string, number> {
-        const grouped = { '0€ - 150€': 0, '150€ - 300€': 0, '300€ - 500€': 0, '+500€': 0 };
+        const currency = this.settingsService.getSettings().currency || 'EUR';
+        const ranges = [
+          { min: 0, max: 150, label: `${formatCurrency(0, currency)} - ${formatCurrency(150, currency)}` },
+          { min: 150, max: 300, label: `${formatCurrency(150, currency)} - ${formatCurrency(300, currency)}` },
+          { min: 300, max: 500, label: `${formatCurrency(300, currency)} - ${formatCurrency(500, currency)}` },
+          { min: 500, max: Infinity, label: `+${formatCurrency(500, currency)}` },
+        ];
     
-        this.productData().forEach(product => {
-        const price = Number(product.price)
-        if (price < 150) grouped['0€ - 150€']++;
-        else if (price < 300) grouped['150€ - 300€']++;
-        else if (price < 500) grouped['300€ - 500€']++;
-        else grouped['+500€']++;
+        const grouped: Record<string, number> = {};
+        ranges.forEach((range) => {
+          grouped[range.label] = 0;
         });
     
+        this.productData().forEach((product) => {
+          const price = Number(product.price);
+          for (const range of ranges) {
+            if (price >= range.min && price < range.max) {
+              grouped[range.label]++;
+              break;
+            }
+          }
+        });
         return grouped;
-    }
+      }
     
     private groupCompaniesBySuffix(): Record<string, number> {
         const grouped: Record<string, number> = {};

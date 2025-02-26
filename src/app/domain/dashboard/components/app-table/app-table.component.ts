@@ -6,12 +6,17 @@ import { RoleEnum } from '../../../../core/role/role.model';
 import { ProductService } from '../../../../core/product/product.service';
 import { CompanyService } from '../../../../core/company/company.service';
 import { SettingsService } from '../../../../core/settings/settings.service';
+import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
 
 @Component({
   selector: 'app-table',
   templateUrl: './app-table.component.html',
   styleUrls: ['./app-table.component.scss'],
-  imports: [RangePipe, RoleOnlyDirective]
+  imports: [
+    RangePipe, 
+    CurrencyPipe,
+    RoleOnlyDirective
+]
 })
 export class AppTableComponent {
     private productService = inject(ProductService);

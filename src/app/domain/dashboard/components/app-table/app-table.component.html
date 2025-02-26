@@ -11,7 +11,13 @@
             @for (row of paginatedData(); track row) {
                 <tr>
                     @for (column of columns(); track column) {
-                        <td>{{ row[ column ] }}</td>
+                        <td>
+                            @if (column === 'price') {
+                                {{ row[column] | currencyFormat }}
+                              } @else {
+                                {{ row[column] }}
+                            }
+                        </td>
                     }
                     <td *appRoleOnly="allRoles.ADMIN">
                           <!-- <button (click)="onEdit(row)">Edit</button> -->
