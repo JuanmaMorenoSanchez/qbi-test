@@ -5,6 +5,7 @@ import { RoleOnlyDirective } from '../../../../shared/directives/role-only.direc
 import { RoleEnum } from '../../../../core/role/role.model';
 import { ProductService } from '../../../../core/product/product.service';
 import { CompanyService } from '../../../../core/company/company.service';
+import { SettingsService } from '../../../../core/settings/settings.service';
 
 @Component({
   selector: 'app-table',
@@ -15,6 +16,7 @@ import { CompanyService } from '../../../../core/company/company.service';
 export class AppTableComponent {
     private productService = inject(ProductService);
     private companyService = inject(CompanyService);
+    private settingsService = inject(SettingsService);
 
     readonly allRoles = RoleEnum;
 
@@ -31,7 +33,7 @@ export class AppTableComponent {
     }
 
     private _data = signal<any[]>([]);
-    pageSize = signal(20);
+    pageSize = signal(this.settingsService.getSettings().selectedPageSize || 20);
     pageIndex = signal(0);
     paginatedData = computed(() => {
         const startIndex = this.pageIndex() * this.pageSize();
@@ -39,12 +41,15 @@ export class AppTableComponent {
         return this.data.slice(startIndex, endIndex);
     });
     columns = computed(() => {
-        if (this.data?.length > 0) {
-            return Object.keys(this.data[0]);
-        } else {
-            return [];
-        }
-    })
+        const settings = this.settingsService.getSettings();
+        const columnSettings =
+          this.dataType === 'product'
+            ? settings.productColumnSettings
+            : settings.companyColumnSettings;
+    
+        const visibleColumns = columnSettings?.filter((c) => c.visible).map((c) => c.name);
+        return this.data?.length && visibleColumns?.length ? visibleColumns : Object.keys(this.data[0] || []);
+      });
 
     onPageSizeChange(event: Event) {
         const selectElement = event.target as HTMLSelectElement;

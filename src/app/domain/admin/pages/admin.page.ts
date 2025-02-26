@@ -30,15 +30,15 @@ export class AdminPage {
   }  
 
   toggleColumnVisibility(column: ColumnSettings, columns: ColumnSettings[]) {
-    this.settings.update((s) => {
+    this.settings.update((setting) => {
       const updatedColumns = columns.map((c) =>
         c === column && (columns.filter(col => col.visible).length > 1 || !c.visible)
           ? { ...c, visible: !c.visible }
           : c
       );
-      return columns === s.productColumnSettings
-        ? { ...s, productColumnSettings: updatedColumns }
-        : { ...s, companyColumnSettings: updatedColumns };
+      return columns === setting.productColumnSettings
+        ? { ...setting, productColumnSettings: updatedColumns }
+        : { ...setting, companyColumnSettings: updatedColumns };
     });
   }
 

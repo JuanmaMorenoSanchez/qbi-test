@@ -5,16 +5,18 @@
       <h2>Pagination</h2>
       <label for="pageSize">Items per page:</label>
       <select id="pageSize" (change)="setPageSize($event)">
-        <option *ngFor="let size of pageSizeOptions" [value]="size" [selected]="size === settings().selectedPageSize">
-          {{ size }}
-        </option>
+        @for (size of pageSizeOptions; track size) {
+            <option [value]="size" [selected]="size === settings().selectedPageSize">
+                {{ size }}
+            </option>
+        }
       </select>
     </div>
   
     <div class="setting">
       <h2>Column Visibility</h2>
       <h3>Products</h3>
-      <div *ngFor="let column of settings().productColumnSettings">
+      @for (column of settings().productColumnSettings; track column) {
         <label>
             <input
                 type="checkbox"
@@ -24,32 +26,33 @@
             />
           {{ column.name }}
         </label>
-      </div>
-  
+      }
       <h3>Companies</h3>
-      <div *ngFor="let column of settings().companyColumnSettings">
+      @for (column of settings().companyColumnSettings; track column) {
         <label>
             <input
                 type="checkbox"
                 [checked]="column.visible"
-                (change)="toggleColumnVisibility(column, settings().productColumnSettings || [])"
-                [disabled]="isColumnDisabled(column, settings().productColumnSettings || [])"
+                (change)="toggleColumnVisibility(column, settings().companyColumnSettings || [])"
+                [disabled]="isColumnDisabled(column, settings().companyColumnSettings || [])"
             />
           {{ column.name }}
         </label>
-      </div>
+      }
     </div>
   
     <div class="setting">
-      <h2>Currency</h2>
-      <label *ngFor="let currency of currencyOptions">
-        <input
-          type="radio"
-          [checked]="settings().currency === currency"
-          (change)="setCurrency(currency)"
-        />
-        {{ currency }}
-      </label>
+        <h2>Currency</h2>
+        @for (currency of currencyOptions; track currency) {
+            <label>
+                <input
+                type="radio"
+                [checked]="settings().currency === currency"
+                (change)="setCurrency(currency)"
+                />
+                {{ currency }}
+            </label>
+        }  
     </div>
   
     <button (click)="saveSettings()">Save Settings</button>

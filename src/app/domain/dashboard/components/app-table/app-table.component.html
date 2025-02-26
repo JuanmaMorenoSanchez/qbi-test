@@ -24,9 +24,9 @@
     
       <div class="pagination-controls">
         <select (change)="onPageSizeChange($event)">
-          <option value="10">10 items per page</option>
-          <option value="20">20 items per page</option>
-          <option value="50">50 items per page</option>
+            @for (size of [10, 20, 50]; track size) {
+                <option [value]="size" [selected]="size === pageSize()">{{ size }} items per page</option>
+            }
         </select>
     
         @for (page of totalPages | rangePipe: 1; track page) {
