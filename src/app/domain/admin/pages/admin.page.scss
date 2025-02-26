@@ -1,0 +1,78 @@
+.admin-page {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-m);
+    padding: var(--spacing-l);
+    background-color: var(--color-neutral-1);
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  
+    h1 {
+      color: var(--color-primary);
+      font-size: 1.8rem;
+      margin-bottom: var(--spacing-m);
+    }
+  
+    .setting {
+      background: var(--color-neutral-2);
+      padding: var(--spacing-m);
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  
+      h2 {
+        color: var(--color-primary-alt);
+        margin-bottom: var(--spacing-s);
+        font-size: 1.4rem;
+      }
+  
+      h3 {
+        color: var(--color-secondary);
+        margin-bottom: var(--spacing-xs);
+        font-size: 1.2rem;
+      }
+  
+      label {
+        display: flex;
+        align-items: center;
+        gap: var(--spacing-xs);
+        font-size: 1rem;
+        color: var(--color-primary);
+      }
+  
+      select,
+      input[type="checkbox"],
+      input[type="radio"] {
+        cursor: pointer;
+      }
+  
+      select {
+        padding: var(--spacing-xs);
+        border: 1px solid var(--color-neutral-3);
+        border-radius: 4px;
+        background: white;
+        color: var(--color-primary);
+        font-size: 1rem;
+      }
+  
+    }
+  
+    button {
+      padding: var(--spacing-s) var(--spacing-m);
+      border: none;
+      border-radius: 6px;
+      background-color: var(--color-primary);
+      color: white;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      max-width: 20rem;
+      &:hover {
+        background-color: var(--color-primary-alt);
+      }
+  
+      &:active {
+        background-color: var(--color-secondary);
+      }
+    }
+  }
+  

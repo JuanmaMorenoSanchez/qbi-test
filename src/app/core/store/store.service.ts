@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { SessionState } from './store.models';
+import { Settings } from '../settings/settings.models';
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class StoreService {
     localStorage.setItem('app-state', JSON.stringify(this.state));
   }
 
-  // type better than any.
+  // type better than any if i have time.
   set(key: keyof SessionState, value: any) {
     this.state[key] = value;
     this.saveState();
@@ -45,19 +46,20 @@ export class StoreService {
     this.stateSubject.next(this.state);
   }
 
-  updateItem(key: 'products' | 'companies', updatedItem: any) {
-    const items = this.get(key);
-    if (!Array.isArray(items)) return;
-  
-    const updatedItems = items.map(item => (item.id === updatedItem.id ? updatedItem : item));
-    this.set(key, updatedItems);
+  updateItem(key: string, updatedItem: any) {
+    const keyAsKey = key as keyof SessionState;
+    const items = this.get(keyAsKey);
+    const newValue = Array.isArray(items) ? items.map(item => (item.id === updatedItem.id ? updatedItem : item)) : updatedItem;
+    this.set(keyAsKey, newValue);
   }
   
-  removeItem(key: 'products' | 'companies', id: string) {
-    const items = this.get(key);
+  removeItem(key: string, id: string) { //not ready to remove settings
+    const keyAsKey = key as keyof SessionState;
+
+    const items = this.get(keyAsKey);
     if (!Array.isArray(items)) return;
   
     const filteredItems = items.filter(item => item.id !== id);
-    this.set(key, filteredItems);
+    this.set(keyAsKey, filteredItems);
   }
 }
