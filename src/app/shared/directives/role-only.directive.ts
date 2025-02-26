@@ -1,6 +1,6 @@
 import { Directive, Input, TemplateRef, ViewContainerRef } from '@angular/core';
-import { RoleService } from '../../core/role/role.service';
-import { Role } from '../../core/role/role.model';
+import { RoleService } from '@core/role/role.service';
+import { Role } from '@core/role/role.model';
 
 @Directive({
   selector: '[appRoleOnly]'

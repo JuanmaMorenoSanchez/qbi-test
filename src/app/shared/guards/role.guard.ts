@@ -9,7 +9,7 @@
 
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { RoleService } from '../../core/role/role.service';
+import { RoleService } from '@core/role/role.service';
 
 @Injectable({
   providedIn: 'root',

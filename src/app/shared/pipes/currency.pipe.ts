@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform, inject } from '@angular/core';
-import { SettingsService } from '../../core/settings/settings.service';
+import { SettingsService } from '@core/settings/settings.service';
 import { formatCurrency } from '../utils/currency.utils';
 
 @Pipe({

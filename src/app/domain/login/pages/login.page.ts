@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { Role } from '../../../core/role/role.model';
-import { RoleService } from '../../../core/role/role.service';
+import { Role } from '@core/role/role.model';
+import { RoleService } from '@core/role/role.service';
 
 @Component({
     selector: 'login-page',

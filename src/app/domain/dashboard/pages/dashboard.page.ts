@@ -1,19 +1,19 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { ProductService } from '../../../core/product/product.service';
-import { CompanyService } from '../../../core/company/company.service';
-import { RoleService } from '../../../core/role/role.service';
-import { RoleEnum } from '../../../core/role/role.model';
+import { ProductService } from '@core/product/product.service';
+import { CompanyService } from '@core/company/company.service';
+import { RoleService } from '@core/role/role.service';
+import { RoleEnum } from '@core/role/role.model';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Product } from '../../../core/product/product.model';
-import { Company } from '../../../core/company/company.model';
+import { Product } from '@core/product/product.model';
+import { Company } from '@core/company/company.model';
 import { AppCounterComponent } from '../components/app-counter/app-counter.component';
 import { DoughnutChartComponent } from '../components/doughnutchart/doughnutchartcomponent';
 import { AppTableComponent } from '../components/app-table/app-table.component';
-import { StoreService } from '../../../core/store/store.service';
+import { StoreService } from '@core/store/store.service';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { SettingsService } from '../../../core/settings/settings.service';
-import { formatCurrency } from '../../../shared/utils/currency.utils';
+import { SettingsService } from '@core/settings/settings.service';
+import { formatCurrency } from '@shared/utils/currency.utils';
 
 @Component({
     selector: 'dashboard-page',

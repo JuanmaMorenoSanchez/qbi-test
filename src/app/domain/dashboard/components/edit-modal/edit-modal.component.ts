@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { Product } from '../../../../core/product/product.model';
-import { Company } from '../../../../core/company/company.model';
+import { Product } from '@core/product/product.model';
+import { Company } from '@core/company/company.model';
 
 @Component({
   selector: 'app-edit-modal',

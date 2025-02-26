@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
-import { RoleEnum } from '../../../core/role/role.model';
-import { RoleService } from '../../../core/role/role.service';
+import { RoleEnum } from '@core/role/role.model';
+import { RoleService } from '@core/role/role.service';
 
 @Component({
     selector: 'portal-page',

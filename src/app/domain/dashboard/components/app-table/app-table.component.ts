@@ -1,12 +1,12 @@
 import { Component, computed, inject, Input } from '@angular/core';
 import { signal } from '@angular/core';
-import { RangePipe } from '../../../../shared/pipes/range.pipe';
-import { RoleOnlyDirective } from '../../../../shared/directives/role-only.directive';
-import { RoleEnum } from '../../../../core/role/role.model';
-import { ProductService } from '../../../../core/product/product.service';
-import { CompanyService } from '../../../../core/company/company.service';
-import { SettingsService } from '../../../../core/settings/settings.service';
-import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
+import { RangePipe } from '@shared/pipes/range.pipe';
+import { RoleOnlyDirective } from '@shared/directives/role-only.directive';
+import { RoleEnum } from '@core/role/role.model';
+import { ProductService } from '@core/product/product.service';
+import { CompanyService } from '@core/company/company.service';
+import { SettingsService } from '@core/settings/settings.service';
+import { CurrencyPipe } from '@shared/pipes/currency.pipe';
 import { EditModalComponent } from '../edit-modal/edit-modal.component';
 
 @Component({

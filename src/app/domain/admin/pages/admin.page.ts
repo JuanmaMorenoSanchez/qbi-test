@@ -1,7 +1,7 @@
 import { Component, signal, effect, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SettingsService } from '../../../core/settings/settings.service';
-import { ColumnSettings } from '../../../core/settings/settings.models';
+import { SettingsService } from '@core/settings/settings.service';
+import { ColumnSettings } from '@core/settings/settings.models';
 
 @Component({
   selector: 'admin-page',
