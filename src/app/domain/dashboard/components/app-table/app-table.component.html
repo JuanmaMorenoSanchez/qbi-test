@@ -20,7 +20,7 @@
                         </td>
                     }
                     <td *appRoleOnly="allRoles.ADMIN">
-                          <!-- <button (click)="onEdit(row)">Edit</button> -->
+                          <button (click)="onEdit(row)">Edit</button>
                           <button (click)="onDelete(row)">Delete</button>
                     </td>
                 </tr>
@@ -46,4 +46,12 @@
       </div>
 } @else {
     <p>No data available.</p>
+}
+
+@if (showModal) {
+    <app-edit-modal
+      [element]="selectedElement"
+      (save)="onSave($event)"
+      (close)="onCloseModal()"
+    ></app-edit-modal>
 }

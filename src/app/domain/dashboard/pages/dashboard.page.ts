@@ -24,7 +24,7 @@ import { formatCurrency } from '../../../shared/utils/currency.utils';
         FormsModule,
         AppCounterComponent,
         DoughnutChartComponent,
-        AppTableComponent
+        AppTableComponent,
     ]
 })
 export class DashboardPage {

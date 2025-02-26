@@ -1,0 +1,48 @@
+<div class="modal-overlay" *ngIf="element">
+    <div class="modal">
+      <h2>Edit {{ element.name }}</h2>
+      <form [formGroup]="form">
+        <label for="id">ID</label>
+        <input id="id" formControlName="id" />
+  
+        <label for="name">Name</label>
+        <input id="name" formControlName="name" />
+  
+        @if (isProduct()) {
+            <label for="product">Product</label>
+            <input id="product" formControlName="product" />
+    
+            <label for="department">Department</label>
+            <input id="department" formControlName="department" />
+    
+            <label for="description">Description</label>
+            <input id="description" formControlName="description" />
+    
+            <label for="price">Price</label>
+            <input id="price" formControlName="price" type="number" />
+        }
+
+        @if (isCompany()) {
+            <label for="suffix">Suffix</label>
+            <input id="suffix" formControlName="suffix" />
+    
+            <label for="catchPhrase">Catch Phrase</label>
+            <input id="catchPhrase" formControlName="catchPhrase" />
+    
+            <label for="catchPhraseDescription">Catch Phrase Description</label>
+            <input id="catchPhraseDescription" formControlName="catchPhraseDescription" />
+    
+            <label for="city">City</label>
+            <input id="city" formControlName="city" />
+    
+            <label for="country">Country</label>
+            <input id="country" formControlName="country" />
+        }
+  
+        <div class="modal-actions">
+          <button type="button" (click)="onClose()">Cancel</button>
+          <button type="button" (click)="onSave()">Save</button>
+        </div>
+      </form>
+    </div>
+  </div>

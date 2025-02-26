@@ -7,6 +7,7 @@ import { ProductService } from '../../../../core/product/product.service';
 import { CompanyService } from '../../../../core/company/company.service';
 import { SettingsService } from '../../../../core/settings/settings.service';
 import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
+import { EditModalComponent } from '../edit-modal/edit-modal.component';
 
 @Component({
   selector: 'app-table',
@@ -15,7 +16,8 @@ import { CurrencyPipe } from '../../../../shared/pipes/currency.pipe';
   imports: [
     RangePipe, 
     CurrencyPipe,
-    RoleOnlyDirective
+    RoleOnlyDirective,
+    EditModalComponent
 ]
 })
 export class AppTableComponent {
@@ -38,6 +40,8 @@ export class AppTableComponent {
     }
 
     private _data = signal<any[]>([]);
+    showModal = false;
+    selectedElement: any = null;
     pageSize = signal(this.settingsService.getSettings().selectedPageSize || 20);
     pageIndex = signal(0);
     paginatedData = computed(() => {
@@ -73,5 +77,23 @@ export class AppTableComponent {
         } else if (this.dataType === 'company') {
             this.companyService.deleteCompany(id);
         }
+    }
+    
+    onEdit(row: any) {
+        this.selectedElement = row; // Set the selected element
+        this.showModal = true; // Show the modal
+    }
+
+    onSave(updatedElement: any) {
+        if (this.dataType === 'product') {
+            this.productService.updateProduct(updatedElement);
+        } else if (this.dataType === 'company') {
+          this.companyService.updateCompany(updatedElement);
+        }
+        this.showModal = false;
+    }
+    
+    onCloseModal() {
+        this.showModal = false; // Hide the modal
     }
 }
